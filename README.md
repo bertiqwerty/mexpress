@@ -1,2 +1,2 @@
-# mexpress
-Math parser and evaluator based on the Rust exmex
+# Mexpress
+Math parser and evaluator based on the Rust crate Exmex

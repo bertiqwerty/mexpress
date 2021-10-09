@@ -7,3 +7,4 @@ target
 **/*.pdb
 .env
 *.pyd
+__pycache__
