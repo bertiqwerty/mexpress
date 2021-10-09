@@ -33,5 +33,22 @@ def test_grad():
     _assert_float_eq(expr.grad(*x), ref(*x))
 
 
+def test_hess():
+
+    expr = mx.parse("2*x * y^2 + cos(z) + sin(Δ)")
+    res = expr.hess(2, 3, 4, 5)
+    ref = np.array(
+        [
+            [0, 4 * 3, 0, 0],
+            [4 * 3, 2 * 2 * 2, 0, 0],
+            [0, 0, -np.cos(4), 0],
+            [0, 0, 0, -np.sin(5)],
+        ],
+        dtype=np.float64,
+    )
+    _assert_float_eq(res, ref)
+
+
 if __name__ == "__main__":
     test_grad()
+    test_hess()
