@@ -1,0 +1,9 @@
+Cargo.lock
+target
+*.opt
+/.idea
+.vscode
+*.etl
+**/*.pdb
+.env
+*.pyd
