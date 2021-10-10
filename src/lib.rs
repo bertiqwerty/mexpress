@@ -34,6 +34,13 @@ impl FlatEx {
     fn n_vars(&self) -> PyResult<i64> {
         Ok(self.owned_flatex.n_vars() as i64)
     }
+
+    fn unparse(&self) -> PyResult<String> {
+        Ok(self
+            .owned_flatex
+            .unparse()
+            .map_err(|e| PyTypeError::new_err(e.msg))?)
+    }
 }
 
 /// Formats the sum of two numbers as string.

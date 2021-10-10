@@ -34,6 +34,9 @@ class Mexpress:
         x = np.array(x, dtype=np.float64)
         return np.array([[hess_ij(x) for hess_ij in hess_i] for hess_i in self._hess])
 
+    def __str__(self):
+        return self.flatex.unparse()
+
 
 def parse(s: str) -> Mexpress:
     return Mexpress(native_parse(s.replace("**", "^")))

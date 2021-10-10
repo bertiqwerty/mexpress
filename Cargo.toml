@@ -1,6 +1,6 @@
 [package]
 name = "mexpress"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2018"
 
 [lib]
@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-exmex = { git = "https://github.com/bertiqwerty/exmex.git", branch = "main" }
+exmex = { git = "https://github.com/bertiqwerty/exmex.git", rev = "474f8f5" }
 numpy = "0.14"
 
 [dependencies.pyo3]
