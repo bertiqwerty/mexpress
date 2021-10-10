@@ -20,9 +20,9 @@ assert abs(y + 3) < 1e-12
 
 # evaluate gradient at (2, 4)
 y_ = f.grad(2, 4)
-assert np.linalg.norm(y_ - [-2, 22])
+assert np.linalg.norm(y_ - [-2, 22]) < 1e-12
 
 # evaluate Hessian at (2, 4)
 y__ = f.hess(2, 4)
-assert np.linalg.norm(y__ - [[2, -1],[-1, 6]])
+assert np.linalg.norm(y__ - [[2, -1],[-1, 6]]) < 1e-12
 ```
