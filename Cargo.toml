@@ -13,7 +13,6 @@ crate-type = ["cdylib"]
 exmex = { git = "https://github.com/bertiqwerty/exmex.git", branch = "main" }
 numpy = "0.14"
 
-
 [dependencies.pyo3]
 version = "0.14"
 features = ["extension-module"]

@@ -36,4 +36,4 @@ class Mexpress:
 
 
 def parse(s: str) -> Mexpress:
-    return Mexpress(native_parse(s))
+    return Mexpress(native_parse(s.replace("**", "^")))

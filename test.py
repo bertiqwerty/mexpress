@@ -35,7 +35,7 @@ def test_grad():
 
 def test_hess():
 
-    expr = mx.parse("2*x * y^2 + cos(z) + sin(Δ)")
+    expr = mx.parse("2*x * y**2 + cos(z) + sin(Δ)")
     res = expr.hess(2, 3, 4, 5)
     ref = np.array(
         [
