@@ -34,7 +34,7 @@ With gradients and Hessians one can at least locally optimize differentiable fun
 from scipy.optimize import minimize
 import mexpress
 
-func_str = f"(1-x) ** 2 + 100*(y-x ** 2) ** 2 "
+func_str = f"(1-x) ** 2 + 100*(y-x ** 2) ** 2"
 f = mexpress.parse(func_str)
 res = minimize(f, [0.0, 0.0], method="trust-ncg", jac=f.grad, hess=f.hess)
 ```
