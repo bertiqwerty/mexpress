@@ -17,7 +17,7 @@ def _run_method(f, method, jac, hess):
     )
     return (
         method_for_print,
-        f"{x['x'][0]:.4f}, {x['x'][1]:.4f}",
+        f"({x['x'][0]:.5f},{x['x'][1]:.5f})",
         f"{elapsed:.3f}_secs",
         f"jac_{str(jac is not None)[:4]}",
         f"hess_{str(hess is not None)[:4]}",
