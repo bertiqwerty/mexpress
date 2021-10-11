@@ -27,7 +27,7 @@ hess_2_4 = f.hess(2, 4)
 assert np.linalg.norm(hess_2_4 - [[2, -1], [-1, 6]]) < 1e-12
 ```
 
-## Optimization
+## Nonlinear Optimization
 
 With gradients and Hessians one can optimize functions passed as strings, e.g., with `scipy.optimize`.
 ```Python
