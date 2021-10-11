@@ -50,5 +50,6 @@ def test_hess():
 
 
 if __name__ == "__main__":
+    test_eval()
     test_grad()
     test_hess()
