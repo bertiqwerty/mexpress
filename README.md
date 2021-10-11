@@ -29,7 +29,7 @@ assert np.linalg.norm(hess_2_4 - [[2, -1], [-1, 6]]) < 1e-12
 
 ## Optimization Example
 
-With gradients and Hessians one can optimize functions passed as strings, e.g., with `scipy.optimize`.
+With gradients and Hessians one can at least locally optimize differentiable functions passed as strings, e.g., with `scipy.optimize`.
 ```Python
 from scipy.optimize import minimize
 import mexpress
