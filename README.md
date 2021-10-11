@@ -40,11 +40,11 @@ res = minimize(f, [0.0, 0.0], method="trust-ncg", jac=f.grad, hess=f.hess)
 ```
 We have played around with different optimizers on `func_str`, see the following output of `py/demo.py`. 
 ```
-CG           (0.99999,0.99998) 0.010_secs jac_True hess_Fals
-CG           (1.00000,0.99999) 0.019_secs jac_Fals hess_Fals
-Newton-CG    (0.99996,0.99992) 0.032_secs jac_True hess_True
-Newton-CG    (1.00000,1.00000) 0.018_secs jac_True hess_Fals
-trust-krylov (1.00000,1.00000) 0.044_secs jac_True hess_True
-trust-ncg    (0.99991,0.99983) 0.012_secs jac_True hess_True
-trust-exact  (1.00000,1.00000) 0.012_secs jac_True hess_True
+CG           (0.99999,0.99998) 0.013_secs jac_True hess_Fals
+CG           (1.00000,0.99999) 0.024_secs jac_Fals hess_Fals
+Newton-CG    (0.99996,0.99992) 0.022_secs jac_True hess_True
+Newton-CG    (1.00000,1.00000) 0.017_secs jac_True hess_Fals
+trust-krylov (1.00000,1.00000) 0.038_secs jac_True hess_True
+trust-ncg    (0.99991,0.99983) 0.007_secs jac_True hess_True
+trust-exact  (1.00000,1.00000) 0.010_secs jac_True hess_True
 ```
