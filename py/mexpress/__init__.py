@@ -1,6 +1,8 @@
 from typing import List
+
 import numpy as np
-from .mexpress import native_parse, FlatEx
+
+from .mexpress import FlatEx, native_parse
 
 
 class Mexpress:

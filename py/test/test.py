@@ -1,5 +1,6 @@
-import mexpress as mx
 import numpy as np
+
+import mexpress as mx
 
 
 def _assert_float_eq(x, y):
