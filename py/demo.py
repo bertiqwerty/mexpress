@@ -12,15 +12,13 @@ def _run_method(f, method, jac, hess):
     x = minimize(f, [0.0, 0.0], method=method, jac=jac, hess=hess)
     elapsed = time() - s
     min_len = 12
-    method_for_print = (
-        method if len(method) >= min_len else method + " " * (min_len - len(method))
-    )
+
     return (
-        method_for_print,
-        f"({x['x'][0]:.5f},{x['x'][1]:.5f})",
-        f"{elapsed:.3f}_secs",
-        f"jac_{str(jac is not None)[:4]}",
-        f"hess_{str(hess is not None)[:4]}",
+        f"{method:{min_len}}",
+        f"({x['x'][0]:.5f}, {x['x'][1]:.5f})",
+        f"{elapsed:.3f} secs",
+        f"jac {str(jac is not None):5}",
+        f"hess {str(hess is not None):5}",
     )
 
 
@@ -40,7 +38,7 @@ def main(func_str):
 
     for m in methods:
         res = _run_method(f, m[0], m[1](f), m[2](f))
-        print(" ".join(str(r) for r in res))
+        print("   ".join(str(r) for r in res))
 
 
 if __name__ == "__main__":
