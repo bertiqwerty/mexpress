@@ -38,7 +38,7 @@ func_str = "(1-x) ** 2 + 100*(y-x ** 2) ** 2"
 f = mexpress.parse(func_str)
 res = minimize(f, [0.0, 0.0], method="trust-ncg", jac=f.grad, hess=f.hess)
 ```
-We have played around with different optimizers on `func_str`, see the following output of `py/demo.py`. 
+We have played around with different optimizers on `func_str`, see the following output of [`py/demo.py`](https://github.com/bertiqwerty/mexpress/blob/main/py/demo.py). 
 ```
 CG           (0.99999,0.99998) 0.013_secs jac_True hess_Fals
 CG           (1.00000,0.99999) 0.024_secs jac_Fals hess_Fals
