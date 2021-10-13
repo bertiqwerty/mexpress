@@ -1,5 +1,5 @@
 # Mexpress
-Math parser and evaluator based on the Rust crate Exmex.
+Math parser and evaluator capable of computing gradients and Hessians. Mexpress uses the Rust crate Exmex.
 ## Installation 
 
 ```
@@ -26,6 +26,8 @@ assert np.linalg.norm(grad_2_4 - [-2, 22]) < 1e-12
 hess_2_4 = f.hess(2, 4)
 assert np.linalg.norm(hess_2_4 - [[2, -1], [-1, 6]]) < 1e-12
 ```
+
+Besides `**` you can also use `^` for exponentiation. Currently, a list of supported mathematical operators can only be found in the [Rust code](https://docs.rs/exmex/0.11.2/src/exmex/operators.rs.html#204-206).
 
 ## Optimization Example
 
