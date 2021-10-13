@@ -22,11 +22,9 @@ def _run_method(f, method, jac, hess, n_runs=3):
     x = xes[med_idx]
     min_len = 12
     x_ = ", ".join([f"{xi:8.5f}" for xi in x["x"]])
-    y_ = f"{f(x['x']):8.4f}"
     return (
         f"{method:{min_len}}",
         f"({x_})",
-        f"y {y_}",
         f"{elapsed:.6f} sec",
         f"jac {str(jac is not None):5}",
         f"hess {str(hess is not None):5}",
@@ -42,7 +40,7 @@ def main(func_str):
         ("Newton-CG", lambda f: f.grad, lambda _: None),
         ("trust-krylov", lambda f: f.grad, lambda f: f.hess),  # needs Hessian
         ("trust-ncg", lambda f: f.grad, lambda f: f.hess),  # needs Hessian
-        # ("trust-exact", lambda f: f.grad, lambda f: f.hess),  # needs Hessian
+        ("trust-exact", lambda f: f.grad, lambda f: f.hess),  # needs Hessian
         ("BFGS", lambda f: f.grad, lambda _: None),
         ("BFGS", lambda _: None, lambda _: None),
         ("L-BFGS-B", lambda f: f.grad, lambda _: None),

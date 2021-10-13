@@ -35,8 +35,14 @@ class Mexpress:
                 [grad_i.partial(i) for i in range(self.flatex.n_vars())] for grad_i in grad_
             ]
         x = np.array(x, dtype=np.float64)
-        return np.array([[hess_ij(x) for hess_ij in hess_i] for hess_i in self._hess])
-
+        hess = np.zeros((self.n_vars, self.n_vars))
+        for r in range(self.n_vars):
+            for c in range(self.n_vars):
+                if r <= c:
+                    hess[r, c] = self._hess[r][c](x)
+                else:
+                    hess[r, c] = hess[c, r]
+        return hess
     def __str__(self):
         return self.flatex.unparse()
 
