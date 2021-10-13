@@ -1,38 +1,56 @@
 from time import time
-
 import numpy as np
-from numpy.core.fromnumeric import argmin
-from numpy.lib.function_base import median
 from scipy.optimize import minimize
 
 import mexpress
 
 
-def _run_method(f, method, jac, hess, n_runs=3):
+def _run_method(f, method, jac, hess, n_runs=100, n_it_max=5000):
     elapseds = []
-    xes = []
+    objs = []
+    fails = []
+    n_its = []
+    np.random.seed(0)
     for _ in range(n_runs):
+        x0 = np.random.random(f.n_vars) * 20 - 10
         s = time()
-        x = minimize(f, [-1.0] * f.n_vars, method=method, jac=jac, hess=hess, options={"maxiter": 5000})
+        x = minimize(
+            f,
+            x0=x0,
+            method=method,
+            jac=jac,
+            hess=hess,
+            options={"maxiter": n_it_max},
+        )
         elapsed = time() - s
         elapseds.append(elapsed)
-        xes.append(x)
-    med_idx = np.argsort(elapseds)[n_runs // 2]
-    elapsed = elapseds[med_idx]
-    x = xes[med_idx]
+        fails.append(not x['success'])
+        if "nit" in x:
+            n_its.append(x['nit'])
+        else:
+            n_its.append(-1)
+        
+    med_sec_idx = np.argsort(elapseds)[n_runs // 2]
+    elapsed = elapseds[med_sec_idx]
+    
+    med_it_idx = np.argsort(n_its)[n_runs // 2]
+    
+    
     min_len = 12
-    x_ = ", ".join([f"{xi:8.5f}" for xi in x["x"]])
+    suc = f"{np.sum(np.array(fails)):3d}"
+    n_it = f"{n_its[med_it_idx]:3d}"
     return (
         f"{method:{min_len}}",
-        f"({x_})",
-        f"{elapsed:.6f} sec",
+        f"#fails {suc}",
+        f"#it {n_it}",        
+        f"{elapsed:.7f} sec",
         f"jac {str(jac is not None):5}",
         f"hess {str(hess is not None):5}",
     )
 
 
 def main(func_str):
-    
+
     methods = [
         ("CG", lambda f: f.grad, lambda _: None),
         ("CG", lambda _: None, lambda _: None),
@@ -48,6 +66,11 @@ def main(func_str):
         ("Nelder-Mead", lambda _: None, lambda _: None),
         ("SLSQP", lambda f: f.grad, lambda _: None),
         ("dogleg", lambda f: f.grad, lambda f: f.hess),
+        ("TNC", lambda f: f.grad, lambda _: None),
+        ("TNC", lambda _: None, lambda _: None),
+        ("COBYLA", lambda _: None, lambda _: None),
+        ("POWELL", lambda _: None, lambda _: None),
+        
     ]
 
     res = []

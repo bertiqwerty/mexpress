@@ -1,5 +1,4 @@
 from typing import List
-
 import numpy as np
 
 from .mexpress import FlatEx, native_parse
@@ -32,17 +31,17 @@ class Mexpress:
         grad_ = self._make_grad()
         if self._hess is None:
             self._hess = [
-                [grad_i.partial(i) for i in range(self.flatex.n_vars())] for grad_i in grad_
+                [grad_i.partial(c) for c in range(r, self.flatex.n_vars()) ] for r, grad_i in enumerate(grad_)
             ]
         x = np.array(x, dtype=np.float64)
         hess = np.zeros((self.n_vars, self.n_vars))
         for r in range(self.n_vars):
-            for c in range(self.n_vars):
-                if r <= c:
-                    hess[r, c] = self._hess[r][c](x)
-                else:
-                    hess[r, c] = hess[c, r]
+            for c in range(r, self.n_vars):
+                hess[r, c] = self._hess[r][c - r](x)
+            for c in range(0, r):                
+                hess[r, c] = hess[c, r]
         return hess
+
     def __str__(self):
         return self.flatex.unparse()
 

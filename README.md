@@ -34,17 +34,28 @@ With gradients and Hessians one can at least locally optimize differentiable fun
 from scipy.optimize import minimize
 import mexpress
 
-func_str = "(1-x) ** 2 + 100*(y-x ** 2) ** 2"
+func_str = f"({a}-x) ** 2 + {b}*(y-x ** 2) ** 2 + (z - 7) ** 2 + (ρ + 5) ** 2"
 f = mexpress.parse(func_str)
-res = minimize(f, [0.0, 0.0], method="trust-ncg", jac=f.grad, hess=f.hess)
+res = minimize(f, x0=[0.0, 0.0, 0.0, 0.0], method="trust-ncg", jac=f.grad, hess=f.hess)
 ```
-We have played around with different optimizers on `func_str`, see the following output of [`py/demo.py`](https://github.com/bertiqwerty/mexpress/blob/main/py/demo.py). 
+We have played around with different optimizers on `func_str`, see the following output of [`py/demo.py`](https://github.com/bertiqwerty/mexpress/blob/main/py/demo.py). In the following table, `#fails` is the number of fails out of 100 attempts with random `x0`s. The iterations and elapsed seconds are medians.
 ```
-CG             (0.99999, 0.99998)   0.003 sec   jac True    hess False
-CG             (1.00000, 0.99999)   0.008 sec   jac False   hess False
-Newton-CG      (0.99996, 0.99992)   0.006 sec   jac True    hess True
-Newton-CG      (1.00000, 1.00000)   0.004 sec   jac True    hess False
-trust-krylov   (1.00000, 1.00000)   0.024 sec   jac True    hess True
-trust-ncg      (0.99991, 0.99983)   0.002 sec   jac True    hess True
-trust-exact    (1.00000, 1.00000)   0.004 sec   jac True    hess True
+CG             #fails   0   #it  44   0.0049996 sec   jac True    hess False
+CG             #fails  23   #it  44   0.0179558 sec   jac False   hess False
+Newton-CG      #fails   0   #it  38   0.0049839 sec   jac True    hess True
+Newton-CG      #fails   5   #it  37   0.0059988 sec   jac True    hess False
+trust-krylov   #fails   0   #it  31   0.0255845 sec   jac True    hess True
+trust-ncg      #fails   0   #it  32   0.0030000 sec   jac True    hess True
+trust-exact    #fails   0   #it  30   0.0060000 sec   jac True    hess True
+BFGS           #fails   0   #it  72   0.0059998 sec   jac True    hess False
+BFGS           #fails  21   #it  74   0.0169995 sec   jac False   hess False
+L-BFGS-B       #fails   0   #it  43   0.0019979 sec   jac True    hess False
+L-BFGS-B       #fails   0   #it  42   0.0069985 sec   jac False   hess False
+Nelder-Mead    #fails   0   #it 441   0.0131288 sec   jac False   hess False
+SLSQP          #fails   0   #it  34   0.0029492 sec   jac True    hess False
+dogleg         #fails  17   #it  27   0.0027690 sec   jac True    hess True
+TNC            #fails   0   #it  29   0.0029995 sec   jac True    hess False
+TNC            #fails   0   #it  27   0.0110002 sec   jac False   hess False
+COBYLA         #fails  46   #it  -1   0.0163412 sec   jac False   hess False
+POWELL         #fails   0   #it  22   0.0139999 sec   jac False   hess False
 ```
