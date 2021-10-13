@@ -10,6 +10,7 @@ class Mexpress:
         self.flatex = flatex
         self._grad = None
         self._hess = None
+        self.n_vars = self.flatex.n_vars()
 
     def _make_grad(self) -> List[FlatEx]:
         if self._grad is None:
