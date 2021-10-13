@@ -40,11 +40,11 @@ res = minimize(f, [0.0, 0.0], method="trust-ncg", jac=f.grad, hess=f.hess)
 ```
 We have played around with different optimizers on `func_str`, see the following output of [`py/demo.py`](https://github.com/bertiqwerty/mexpress/blob/main/py/demo.py). 
 ```
-CG             (0.99999, 0.99998)   0.016 sec   jac True    hess False
-CG             (1.00000, 0.99999)   0.019 sec   jac False   hess False
-Newton-CG      (0.99996, 0.99992)   0.020 sec   jac True    hess True 
-Newton-CG      (1.00000, 1.00000)   0.019 sec   jac True    hess False
-trust-krylov   (1.00000, 1.00000)   0.031 sec   jac True    hess True 
-trust-ncg      (0.99991, 0.99983)   0.006 sec   jac True    hess True
-trust-exact    (1.00000, 1.00000)   0.009 sec   jac True    hess True
+CG             (0.99999, 0.99998)   0.003 sec   jac True    hess False
+CG             (1.00000, 0.99999)   0.008 sec   jac False   hess False
+Newton-CG      (0.99996, 0.99992)   0.006 sec   jac True    hess True
+Newton-CG      (1.00000, 1.00000)   0.004 sec   jac True    hess False
+trust-krylov   (1.00000, 1.00000)   0.024 sec   jac True    hess True
+trust-ncg      (0.99991, 0.99983)   0.002 sec   jac True    hess True
+trust-exact    (1.00000, 1.00000)   0.004 sec   jac True    hess True
 ```
