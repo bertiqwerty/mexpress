@@ -1,5 +1,6 @@
 import numpy as np
 
+import pytest
 import mexpress as mx
 
 
@@ -8,6 +9,10 @@ def _assert_float_eq(x, y):
 
 
 def test_eval():
+
+    with pytest.raises(TypeError):
+        mx.parse("")
+
     expr = mx.parse("x^2 + 7")
     _assert_float_eq(expr(2), 11)
 
@@ -24,6 +29,8 @@ def test_eval():
 
 def test_grad():
     expr = mx.parse("x + y + z")
+    with pytest.raises(TypeError):
+        expr.partial(3)
     _assert_float_eq(expr.grad(1, 2, 3), [1, 1, 1])
     _assert_float_eq(expr.grad(np.random.random(3)), [1, 1, 1])
     _assert_float_eq(expr.grad(np.random.random(3)), [1, 1, 1])
