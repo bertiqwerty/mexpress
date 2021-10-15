@@ -1,26 +1,26 @@
 from typing import List
 import numpy as np
 
-from .mexpress import FlatEx, native_parse
+from .mexpress import InterfEx, native_parse
 
 
 class Mexpress:
-    def __init__(self, flatex: FlatEx) -> None:
-        self.flatex = flatex
+    def __init__(self, interfex: InterfEx) -> None:
+        self.interfex = interfex
         self._grad = None
         self._hess = None
-        self.n_vars = self.flatex.n_vars()
+        self.n_vars = self.interfex.n_vars()
 
-    def _make_grad(self) -> List[FlatEx]:
+    def _make_grad(self) -> List[InterfEx]:
         if self._grad is None:
-            self._grad = [self.flatex.partial(i) for i in range(self.flatex.n_vars())]
+            self._grad = [self.interfex.partial(i) for i in range(self.interfex.n_vars())]
         return self._grad
 
     def __call__(self, *x):
-        return self.flatex(np.array(x, dtype=np.float64))
+        return self.interfex(np.array(x, dtype=np.float64))
 
     def partial(self, i: int) -> "Mexpress":
-        return Mexpress(self.flatex.partial(i))
+        return Mexpress(self.interfex.partial(i))
 
     def grad(self, *x):
         grad_ = self._make_grad()
@@ -31,7 +31,7 @@ class Mexpress:
         grad_ = self._make_grad()
         if self._hess is None:
             self._hess = [
-                [grad_i.partial(c) for c in range(r, self.flatex.n_vars()) ] for r, grad_i in enumerate(grad_)
+                [grad_i.partial(c) for c in range(r, self.interfex.n_vars()) ] for r, grad_i in enumerate(grad_)
             ]
         x = np.array(x, dtype=np.float64)
         hess = np.zeros((self.n_vars, self.n_vars))
@@ -43,7 +43,7 @@ class Mexpress:
         return hess
 
     def __str__(self):
-        return self.flatex.unparse()
+        return self.interfex.unparse()
 
 
 def parse(s: str) -> Mexpress:
