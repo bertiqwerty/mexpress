@@ -78,7 +78,6 @@ def test_f32():
     _assert_float_eq(res, ref, tol=tol_f32)
 
 
-
 if __name__ == "__main__":
     test_eval()
     test_grad()
