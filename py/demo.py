@@ -43,7 +43,7 @@ def _run_method(f, method, jac, hess, n_runs=100, n_it_max=5000):
         f"{method:{min_len}}",
         f"#fails {suc}",
         f"#it {n_it}",        
-        f"{elapsed:.7f} sec",
+        f"{elapsed:.10f} sec",
         f"jac {str(jac is not None):5}",
         f"hess {str(hess is not None):5}",
     )
@@ -76,7 +76,7 @@ def main(func_str):
     res = []
 
     for m in methods:
-        f = mexpress.parse(func_str)
+        f = mexpress.parse_f64(func_str)
         res = _run_method(f, m[0], m[1](f), m[2](f))
         print("   ".join(str(r) for r in res))
 
