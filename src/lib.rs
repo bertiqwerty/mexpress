@@ -4,7 +4,7 @@ use std::str::FromStr;
 use exmex::Express;
 use exmex::OwnedFlatEx;
 use num::Float;
-use numpy::PyArrayDyn;
+use numpy::PyArray1;
 use pyo3::exceptions::PyTypeError;
 use pyo3::prelude::*;
 
@@ -14,7 +14,7 @@ fn partial<T: Float + Debug>(expr: &OwnedFlatEx<T>, i: i64) -> PyResult<OwnedFla
         .map_err(|e| PyTypeError::new_err(e.msg))
 }
 
-fn eval<T: Float + Debug + numpy::Element>(expr: &OwnedFlatEx<T>, x: &PyArrayDyn<T>) -> PyResult<T> {
+fn eval<T: Float + Debug + numpy::Element>(expr: &OwnedFlatEx<T>, x: &PyArray1<T>) -> PyResult<T> {
     unsafe {
         expr.eval(x.as_slice()?)
             .map_err(|e| PyTypeError::new_err(e.msg))
@@ -33,7 +33,7 @@ struct InterfEx {
 #[pymethods]
 impl InterfEx {
     #[call]
-    fn __call__(&self, x: &PyArrayDyn<f64>) -> PyResult<f64> {
+    fn __call__(&self, x: &PyArray1<f64>) -> PyResult<f64> {
         eval(&self.expr, x)
     }
 

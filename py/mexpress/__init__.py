@@ -4,6 +4,11 @@ import numpy as np
 from .mexpress import InterfEx, native_parse
 
 
+def _transform_x(x):
+    x = np.asarray(x, dtype=np.float64)
+    # since we want to have both options f(*x) and f(x) we need to check the dimension
+    return x if x.ndim == 1 else x.squeeze()
+    
 class Mexpress:
     def __init__(self, interfex: InterfEx) -> None:
         self.interfex = interfex
@@ -17,14 +22,14 @@ class Mexpress:
         return self._grad
 
     def __call__(self, *x):
-        return self.interfex(np.array(x, dtype=np.float64))
+        return self.interfex(_transform_x(x))
 
     def partial(self, i: int) -> "Mexpress":
         return Mexpress(self.interfex.partial(i))
 
     def grad(self, *x):
         grad_ = self._make_grad()
-        x = np.array(x, dtype=np.float64)
+        x = _transform_x(x)
         return np.array([di(x) for di in grad_], dtype=np.float64)
 
     def hess(self, *x):
@@ -33,7 +38,7 @@ class Mexpress:
             self._hess = [
                 [grad_i.partial(c) for c in range(r, self.interfex.n_vars()) ] for r, grad_i in enumerate(grad_)
             ]
-        x = np.array(x, dtype=np.float64)
+        x = _transform_x(x)
         hess = np.zeros((self.n_vars, self.n_vars))
         for r in range(self.n_vars):
             for c in range(r, self.n_vars):
