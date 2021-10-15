@@ -7,7 +7,6 @@ import mexpress
 
 def _run_method(f, method, jac, hess, n_runs=100, n_it_max=5000):
     elapseds = []
-    objs = []
     fails = []
     n_its = []
     np.random.seed(0)
