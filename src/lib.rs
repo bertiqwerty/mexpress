@@ -25,34 +25,7 @@ fn unparse<T: Debug + Float>(expr: &OwnedFlatEx<T>) -> PyResult<String> {
     expr.unparse().map_err(|e| PyTypeError::new_err(e.msg))
 }
 
-#[pyclass]
-struct InterfEx {
-    expr: OwnedFlatEx<f64>,
-}
-
-#[pymethods]
-impl InterfEx {
-    #[call]
-    fn __call__(&self, x: &PyArray1<f64>) -> PyResult<f64> {
-        eval(&self.expr, x)
-    }
-
-    fn partial(&self, i: i64) -> PyResult<InterfEx> {
-        Ok(Self {
-            expr: partial(&self.expr, i)?,
-        })
-    }
-
-    fn n_vars(&self) -> PyResult<i64> {
-        Ok(self.expr.n_vars() as i64)
-    }
-
-    fn unparse(&self) -> PyResult<String> {
-        unparse(&self.expr)
-    }
-}
-
-fn native_parse_<T>(s: &str) -> PyResult<OwnedFlatEx<T>>
+fn native_parse<T>(s: &str) -> PyResult<OwnedFlatEx<T>>
 where
     T: Debug + Float + FromStr,
     <T as FromStr>::Err: Debug,
@@ -60,16 +33,51 @@ where
     OwnedFlatEx::<T>::from_str(s).map_err(|e| PyTypeError::new_err(e.msg))
 }
 
-#[pyfunction]
-fn native_parse(s: &str) -> PyResult<InterfEx> {
-    Ok(InterfEx {
-        expr: native_parse_::<f64>(s)?,
-    })
+macro_rules! interf_ex {
+    ($interf_ex_name:ident, $float:ty, $parse_name:ident) => {
+        #[pyclass]
+        struct $interf_ex_name {
+            expr: OwnedFlatEx<$float>,
+        }
+
+        #[pymethods]
+        impl $interf_ex_name {
+            #[call]
+            fn __call__(&self, x: &PyArray1<$float>) -> PyResult<$float> {
+                eval(&self.expr, x)
+            }
+
+            fn partial(&self, i: i64) -> PyResult<$interf_ex_name> {
+                Ok(Self {
+                    expr: partial(&self.expr, i)?,
+                })
+            }
+
+            fn n_vars(&self) -> PyResult<i64> {
+                Ok(self.expr.n_vars() as i64)
+            }
+
+            fn unparse(&self) -> PyResult<String> {
+                unparse(&self.expr)
+            }
+        }
+        #[pyfunction]
+        fn $parse_name(s: &str) -> PyResult<$interf_ex_name> {
+            Ok($interf_ex_name {
+                expr: native_parse::<$float>(s)?,
+            })
+        }
+    };
 }
+
+interf_ex!(InterfExF64, f64, native_parse_f64);
+interf_ex!(InterfExF32, f32, native_parse_f32);
 
 #[pymodule]
 fn mexpress(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(native_parse, m)?)?;
-    m.add_class::<InterfEx>()?;
+    m.add_function(wrap_pyfunction!(native_parse_f64, m)?)?;
+    m.add_class::<InterfExF64>()?;
+    m.add_function(wrap_pyfunction!(native_parse_f32, m)?)?;
+    m.add_class::<InterfExF32>()?;
     Ok(())
 }
