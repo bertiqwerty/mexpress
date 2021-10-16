@@ -1,5 +1,5 @@
 # Mexpress
-Math parser and evaluator capable of computing gradients and Hessians. Mexpress uses the Rust crate [Exmex](https://crates.io/crates/exmex).
+Math parser and evaluator in Python capable of computing gradients and Hessians. Mexpress uses the Rust crate [Exmex](https://crates.io/crates/exmex).
 ## Installation 
 
 ```
