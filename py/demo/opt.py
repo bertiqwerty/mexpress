@@ -23,25 +23,24 @@ def _run_method(f, method, jac, hess, n_runs=100, n_it_max=5000):
         )
         elapsed = time() - s
         elapseds.append(elapsed)
-        fails.append(not x['success'])
+        fails.append(not x["success"])
         if "nit" in x:
-            n_its.append(x['nit'])
+            n_its.append(x["nit"])
         else:
             n_its.append(-1)
-        
+
     med_sec_idx = np.argsort(elapseds)[n_runs // 2]
     elapsed = elapseds[med_sec_idx]
-    
+
     med_it_idx = np.argsort(n_its)[n_runs // 2]
-    
-    
+
     min_len = 12
     suc = f"{np.sum(np.array(fails)):3d}"
     n_it = f"{n_its[med_it_idx]:3d}"
     return (
         f"{method:{min_len}}",
         f"#fails {suc}",
-        f"#it {n_it}",        
+        f"#it {n_it}",
         f"{elapsed:.10f} sec",
         f"jac {str(jac is not None):5}",
         f"hess {str(hess is not None):5}",
@@ -69,7 +68,6 @@ def main(func_str):
         ("TNC", lambda _: None, lambda _: None),
         ("COBYLA", lambda _: None, lambda _: None),
         ("POWELL", lambda _: None, lambda _: None),
-        
     ]
 
     res = []
