@@ -1,3 +1,4 @@
+[![PyPI downloads](https://img.shields.io/pypi/dm/mexpress.svg?maxAge=21600)](https://pypistats.org/packages/mexpress)
 # Mexpress
 Math parser and evaluator in Python capable of computing gradients and Hessians. Mexpress uses the Rust crate [Exmex](https://crates.io/crates/exmex).
 ## Installation 
