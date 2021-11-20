@@ -12,4 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run tests
-        run: pytest test/test.py
+        run: |
+          pip install pytest mexpress
+          pytest test/test.py
