@@ -16,8 +16,8 @@ jobs:
         run: |
           pip install pytest
           pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mexpress
-          pytest py/test/test.py
+          pytest py/test/test.py          
       - name: Run tests with PyPI package
         run: |
-          pip install pytest mexpress
+          pip install --ignore-installed mexpress
           pytest py/test/test.py
