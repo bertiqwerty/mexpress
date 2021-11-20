@@ -8,20 +8,20 @@ use numpy::PyArray1;
 use pyo3::exceptions::PyTypeError;
 use pyo3::prelude::*;
 
-fn partial<T: Float + Debug>(expr: &OwnedFlatEx<T>, i: i64) -> PyResult<OwnedFlatEx<T>> {
+fn partial<T: Float + FromStr + Debug>(expr: &OwnedFlatEx<T>, i: i64) -> PyResult<OwnedFlatEx<T>> {
     expr.clone()
         .partial(i as usize)
         .map_err(|e| PyTypeError::new_err(e.msg))
 }
 
-fn eval<T: Float + Debug + numpy::Element>(expr: &OwnedFlatEx<T>, x: &PyArray1<T>) -> PyResult<T> {
+fn eval<T: Float + Debug + FromStr + numpy::Element>(expr: &OwnedFlatEx<T>, x: &PyArray1<T>) -> PyResult<T> {
     unsafe {
         expr.eval(x.as_slice()?)
             .map_err(|e| PyTypeError::new_err(e.msg))
     }
 }
 
-fn unparse<T: Debug + Float>(expr: &OwnedFlatEx<T>) -> PyResult<String> {
+fn unparse<T: Debug + FromStr + Float>(expr: &OwnedFlatEx<T>) -> PyResult<String> {
     expr.unparse().map_err(|e| PyTypeError::new_err(e.msg))
 }
 

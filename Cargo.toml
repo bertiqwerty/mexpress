@@ -11,7 +11,7 @@ name = "mexpress"
 crate-type = ["cdylib"]
 
 [dependencies]
-exmex = "0.11.3"
+exmex = "0.12.0"
 numpy = "0.14"
 num = "0.4"
 

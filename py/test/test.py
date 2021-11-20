@@ -58,7 +58,7 @@ def test_hess():
 
 
 def test_f32():
-    expr = mx.parse_f32("sin(x)^2 + 1/y")
+    expr = mx.parse_f32("sin(x)^(round 2.3) + 1/y")
     ref = np.sin(2) ** 2 + 1 / 4
     tol_f32 = 1e-6
     _assert_float_eq(expr(np.asarray((2.0, 4.0), dtype=np.float32)), ref, tol=tol_f32)
