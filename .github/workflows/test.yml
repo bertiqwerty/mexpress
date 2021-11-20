@@ -11,6 +11,7 @@ jobs:
   testing:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Run tests with test.pypi.org package
         run: |
           pip install pytest
@@ -19,4 +20,4 @@ jobs:
       - name: Run tests with PyPI package
         run: |
           pip install pytest mexpress
-          pytest test/test.py
+          pytest py/test/test.py
