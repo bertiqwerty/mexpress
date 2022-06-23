@@ -42,7 +42,7 @@ func_str = f"(1 - x) ** 2 + 100 * (y - x ** 2) ** 2 + (z - 7) ** 2 + (ρ + 5) **
 f = mexpress.parse_f64(func_str)
 res = minimize(f, x0=[0.0, 0.0, 0.0, 0.0], method="trust-ncg", jac=f.grad, hess=f.hess)
 ```
-We have played around with different optimizers on `func_str`, see the following output of `py/demo/opt.py`. In the following table, `#fails` is the number of fails out of 100 attempts with random `x0`s. The iterations and elapsed seconds are medians.
+We have played around with different methods to optimize `func_str`, see the following output of `py/demo/opt.py`. In the following table, `#fails` is the number of fails out of 100 attempts with random `x0`s. The iterations and elapsed seconds are medians.
 ```
 CG             #fails   0   #it  44   0.0049996 sec   jac True    hess False
 CG             #fails  23   #it  44   0.0179558 sec   jac False   hess False
