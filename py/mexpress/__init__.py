@@ -1,4 +1,3 @@
-from typing import List
 import numpy as np
 
 from .mexpress import native_parse_f64, native_parse_f32

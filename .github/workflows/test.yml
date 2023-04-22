@@ -1,23 +1,20 @@
 name: Test
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
-  testing:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run tests with test.pypi.org package
-        run: |
-          pip install pytest
-          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mexpress
-          pytest py/test/test.py          
-      - name: Run tests with PyPI package
-        run: |
-          pip install --ignore-installed mexpress
-          pytest py/test/test.py
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Run Pipeline
+      run: |
+        python3 -m venv .venv
+        . .venv/bin/activate
+        pip3 install -r requirements-dev.txt
+        maturin develop
+        pytest py/test
+        ruff check .
