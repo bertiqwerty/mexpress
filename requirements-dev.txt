@@ -2,3 +2,4 @@ py_expression_eval
 sympy
 pytest
 maturin
+scipy

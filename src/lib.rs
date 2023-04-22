@@ -1,48 +1,58 @@
 use std::fmt::Debug;
 use std::str::FromStr;
 
-use exmex::Express;
-use exmex::OwnedFlatEx;
+use exmex::{Differentiate, Express, FlatEx, DataType};
 use num::Float;
 use numpy::PyArray1;
 use pyo3::exceptions::PyTypeError;
 use pyo3::prelude::*;
 
-fn partial<T: Float + FromStr + Debug>(expr: &OwnedFlatEx<T>, i: i64) -> PyResult<OwnedFlatEx<T>> {
+fn partial<T>(expr: &FlatEx<T>, i: i64) -> PyResult<FlatEx<T>>
+where
+    T: Float + DataType,
+    <T as FromStr>::Err: Debug,
+{
     expr.clone()
         .partial(i as usize)
-        .map_err(|e| PyTypeError::new_err(e.msg))
+        .map_err(|e| PyTypeError::new_err(e.msg().to_string()))
 }
 
-fn eval<T: Float + Debug + FromStr + numpy::Element>(expr: &OwnedFlatEx<T>, x: &PyArray1<T>) -> PyResult<T> {
+fn eval<T>(expr: &FlatEx<T>, x: &PyArray1<T>) -> PyResult<T>
+where
+    T: DataType + Float + numpy::Element,
+    <T as FromStr>::Err: Debug,
+{
     unsafe {
         expr.eval(x.as_slice()?)
-            .map_err(|e| PyTypeError::new_err(e.msg))
+            .map_err(|e| PyTypeError::new_err(e.msg().to_string()))
     }
 }
 
-fn unparse<T: Debug + FromStr + Float>(expr: &OwnedFlatEx<T>) -> PyResult<String> {
-    expr.unparse().map_err(|e| PyTypeError::new_err(e.msg))
-}
-
-fn native_parse<T>(s: &str) -> PyResult<OwnedFlatEx<T>>
+fn unparse<T>(expr: &FlatEx<T>) -> PyResult<String> 
 where
-    T: Debug + Float + FromStr,
+    T: Float + DataType,
     <T as FromStr>::Err: Debug,
 {
-    OwnedFlatEx::<T>::from_str(s).map_err(|e| PyTypeError::new_err(e.msg))
+    Ok(expr.unparse().to_string())
+}
+
+fn native_parse<T>(s: &str) -> PyResult<FlatEx<T>>
+where
+    T: DataType + Float,
+    <T as FromStr>::Err: Debug,
+{
+    FlatEx::<T>::parse(s).map_err(|e| PyTypeError::new_err(e.msg().to_string()))
 }
 
 macro_rules! interf_ex {
     ($interf_ex_name:ident, $float:ty, $parse_name:ident) => {
         #[pyclass]
         struct $interf_ex_name {
-            expr: OwnedFlatEx<$float>,
+            expr: FlatEx<$float>,
         }
 
         #[pymethods]
         impl $interf_ex_name {
-            #[call]
             fn __call__(&self, x: &PyArray1<$float>) -> PyResult<$float> {
                 eval(&self.expr, x)
             }
@@ -54,7 +64,7 @@ macro_rules! interf_ex {
             }
 
             fn n_vars(&self) -> PyResult<i64> {
-                Ok(self.expr.n_vars() as i64)
+                Ok(self.expr.var_names().len() as i64)
             }
 
             fn unparse(&self) -> PyResult<String> {

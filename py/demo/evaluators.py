@@ -3,7 +3,6 @@ from py_expression_eval import Parser
 import mexpress as mx
 import numpy as np
 from math import sin, cos, tan
-import ast
 from sympy import sympify
 
 

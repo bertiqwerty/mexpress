@@ -2,7 +2,7 @@
 [package]
 name = "mexpress"
 version = "0.1.4"
-edition = "2018"
+edition = "2021"
 repository = "https://github.com/bertiqwerty/mexpress"
 license = "MIT"
 
@@ -11,12 +11,14 @@ name = "mexpress"
 crate-type = ["cdylib"]
 
 [dependencies]
-exmex = "0.12.0"
-numpy = "0.14"
+exmex = { git = "https://www.github.com/bertiqwerty/exmex.git", branch = "main", features = [
+    "partial",
+] }
+numpy = "0.18.0"
 num = "0.4"
 
 [dependencies.pyo3]
-version = "0.14"
+version = "0.18.3"
 features = ["extension-module"]
 
 [package.metadata.maturin]
