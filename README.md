@@ -3,7 +3,6 @@ Math parser and evaluator in Python capable of computing gradients and Hessians.
 ## Installation 
 [![PyPI version](https://img.shields.io/pypi/v/mexpress.svg?maxAge=3600)](https://pypi.org/project/mexpress/)
 [![example workflow](https://github.com/bertiqwerty/mexpress/actions/workflows/test.yml/badge.svg)](https://github.com/bertiqwerty/mexpress)
-
 [![dependency status](https://deps.rs/repo/github/bertiqwerty/mexpress/status.svg)](https://deps.rs/repo/github/bertiqwerty/mexpress)
 
 ```
