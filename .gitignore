@@ -8,3 +8,5 @@ target
 .env
 *.pyd
 __pycache__
+*.so
+.venv
