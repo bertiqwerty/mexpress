@@ -4,3 +4,4 @@ pytest
 maturin
 scipy
 ruff
+tomli

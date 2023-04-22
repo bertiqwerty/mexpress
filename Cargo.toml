@@ -11,9 +11,7 @@ name = "mexpress"
 crate-type = ["cdylib"]
 
 [dependencies]
-exmex = { git = "https://www.github.com/bertiqwerty/exmex.git", branch = "main", features = [
-    "partial",
-] }
+exmex = { version = "0.17.2", features = ["partial"] }
 numpy = "0.18.0"
 num = "0.4"
 
