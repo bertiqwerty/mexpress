@@ -9,9 +9,8 @@ permissions:
 
 jobs:
   sdist:
+    runs-on: ubuntu-latest
     steps:
-      runs-on: ubuntu-latest
-      steps:
       - uses: actions/checkout@v3
       - name: Build sdist
         uses: PyO3/maturin-action@v1
