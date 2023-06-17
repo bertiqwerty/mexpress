@@ -87,7 +87,7 @@ interf_ex!(InterfExF64, f64, native_parse_f64);
 interf_ex!(InterfExF32, f32, native_parse_f32);
 
 #[pymodule]
-fn mexpress(_py: Python, m: &PyModule) -> PyResult<()> {
+fn _mexpress(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(native_parse_f64, m)?)?;
     m.add_class::<InterfExF64>()?;
     m.add_function(wrap_pyfunction!(native_parse_f32, m)?)?;

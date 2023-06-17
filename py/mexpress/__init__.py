@@ -1,6 +1,6 @@
 import numpy as np
 
-from .mexpress import native_parse_f64, native_parse_f32
+from mexpress._mexpress import native_parse_f64, native_parse_f32
 
 
 def _transform_x(x):

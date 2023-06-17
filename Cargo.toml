@@ -21,3 +21,4 @@ features = ["extension-module"]
 
 [package.metadata.maturin]
 python-source = "py"
+name = "mexpress._mexpress"
