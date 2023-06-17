@@ -31,7 +31,7 @@ where
     }
 }
 
-fn unparse<T>(expr: &FlatEx<T>) -> PyResult<String> 
+fn unparse<T>(expr: &FlatEx<T>) -> PyResult<String>
 where
     T: Float + DataType,
     <T as FromStr>::Err: Debug,
