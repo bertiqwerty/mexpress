@@ -16,5 +16,5 @@ jobs:
         . .venv/bin/activate
         pip3 install -r requirements-dev.txt
         maturin develop
-        pytest py/test
+        pytest test
         ruff check .
