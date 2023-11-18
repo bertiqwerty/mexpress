@@ -1,6 +1,6 @@
 import numpy as np
 
-from mexpress._mexpress import native_parse_f64, native_parse_f32
+from mexpress import _mexpress as mx
 
 
 def _transform_x(x):
@@ -56,8 +56,8 @@ class Mexpress:
 
 
 def parse_f64(s: str) -> Mexpress:
-    return Mexpress(native_parse_f64(s.replace("**", "^")), dtype=np.float64)
+    return Mexpress(mx.native_parse_f64(s.replace("**", "^")), dtype=np.float64)
 
 
 def parse_f32(s: str) -> Mexpress:
-    return Mexpress(native_parse_f32(s.replace("**", "^")), dtype=np.float32)
+    return Mexpress(mx.native_parse_f32(s.replace("**", "^")), dtype=np.float32)

@@ -6,8 +6,10 @@ readme = "README.md"
 version = "0.1.5"
 requires-python = ">=3.8"
 [build-system]
-requires = ["maturin>=0.14,<0.15"]
+requires = ["maturin>1.0,<2.0"]
 build-backend = "maturin"
-
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "mexpress._mexpress"
 [tool.ruff]
 ignore = ["E731"]

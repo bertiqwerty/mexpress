@@ -14,11 +14,4 @@ crate-type = ["cdylib"]
 exmex = { version = "0.18.0", features = ["partial"] }
 numpy = "0.20.0"
 num = "0.4"
-
-[dependencies.pyo3]
-version = "0.20.0"
-features = ["extension-module"]
-
-[package.metadata.maturin]
-python-source = "py"
-name = "mexpress._mexpress"
+pyo3 = { version = "0.20.0", features = ["extension-module"] }
