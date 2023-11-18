@@ -1,18 +1,17 @@
-use std::fmt::Debug;
-use std::str::FromStr;
-
-use exmex::{Differentiate, Express, FlatEx};
+use exmex::{DiffDataType, Differentiate, Express, FlatEx};
 use num::Float;
 use numpy::PyArray1;
 use pyo3::exceptions::PyTypeError;
 use pyo3::prelude::*;
+use std::fmt::Debug;
+use std::str::FromStr;
 
 pub trait DataType: Clone + FromStr + Debug + Default {}
 impl<T: Clone + FromStr + Debug + Default> DataType for T {}
 
 fn partial<T>(expr: &FlatEx<T>, i: i64) -> PyResult<FlatEx<T>>
 where
-    T: Float + DataType,
+    T: Float + DiffDataType,
     <T as FromStr>::Err: Debug,
 {
     expr.clone()
