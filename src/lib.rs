@@ -1,6 +1,6 @@
 use exmex::{DiffDataType, Differentiate, Express, FlatEx};
 use num::Float;
-use numpy::PyArray1;
+use numpy::PyReadonlyArray1;
 use pyo3::exceptions::PyTypeError;
 use pyo3::prelude::*;
 use std::fmt::Debug;
@@ -19,15 +19,13 @@ where
         .map_err(|e| PyTypeError::new_err(e.msg().to_string()))
 }
 
-fn eval<T>(expr: &FlatEx<T>, x: &PyArray1<T>) -> PyResult<T>
+fn eval<T>(expr: &FlatEx<T>, x: &PyReadonlyArray1<T>) -> PyResult<T>
 where
     T: DataType + Float + numpy::Element,
     <T as FromStr>::Err: Debug,
 {
-    unsafe {
-        expr.eval(x.as_slice()?)
-            .map_err(|e| PyTypeError::new_err(e.msg().to_string()))
-    }
+    expr.eval(x.as_slice()?)
+        .map_err(|e| PyTypeError::new_err(e.msg().to_string()))
 }
 
 fn unparse<T>(expr: &FlatEx<T>) -> PyResult<String>
@@ -55,8 +53,8 @@ macro_rules! interf_ex {
 
         #[pymethods]
         impl $interf_ex_name {
-            fn __call__(&self, x: &PyArray1<$float>) -> PyResult<$float> {
-                eval(&self.expr, x)
+            fn __call__(&self, x: PyReadonlyArray1<$float>) -> PyResult<$float> {
+                eval(&self.expr, &x)
             }
 
             fn partial(&self, i: i64) -> PyResult<$interf_ex_name> {
@@ -86,7 +84,7 @@ interf_ex!(InterfExF64, f64, native_parse_f64);
 interf_ex!(InterfExF32, f32, native_parse_f32);
 
 #[pymodule]
-fn _mexpress(_py: Python, m: &PyModule) -> PyResult<()> {
+fn _mexpress(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(native_parse_f64, m)?)?;
     m.add_class::<InterfExF64>()?;
     m.add_function(wrap_pyfunction!(native_parse_f32, m)?)?;
