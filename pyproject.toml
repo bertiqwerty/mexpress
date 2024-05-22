@@ -3,7 +3,7 @@ name = "mexpress"
 dependencies = ["numpy"]
 description = "Math parser and evaluator capable of computing gradients and Hessians."
 readme = "README.md"
-version = "0.1.5"
+version = "0.1.6"
 requires-python = ">=3.8"
 [build-system]
 requires = ["maturin>1.0,<2.0"]

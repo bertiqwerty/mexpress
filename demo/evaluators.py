@@ -30,7 +30,6 @@ def timed_eval(name, func, args, n_runs=1000, **kwargs):
 
 
 def main():
-
     s = "sin(x) + tan(y) / (sin(z)**2 + cos(z)**2)"
 
     mexpr = timed_parse("mexpress", mx.parse_f64, s)

@@ -9,7 +9,6 @@ def _assert_float_eq(x, y, tol=1e-12):
 
 
 def test_eval():
-
     with pytest.raises(TypeError):
         mx.parse_f64("")
 
@@ -42,7 +41,6 @@ def test_grad():
 
 
 def test_hess():
-
     expr = mx.parse_f64("2*x * y**2 + cos(z) + sin(Δ)")
     res = expr.hess(2.0, 3.0, 4.0, 5.0)
     ref = np.array(

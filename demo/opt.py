@@ -48,7 +48,6 @@ def _run_method(f, method, jac, hess, n_runs=100, n_it_max=5000):
 
 
 def main(func_str):
-
     methods = [
         ("CG", lambda f: f.grad, lambda _: None),
         ("CG", lambda _: None, lambda _: None),
