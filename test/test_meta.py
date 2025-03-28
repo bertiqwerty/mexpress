@@ -22,7 +22,7 @@ def test_readme():
         f"{code_block_start}(.*?){code_block_end}", flags=re.DOTALL
     )
     for filename in files_under_test:
-        with open(filename, "r") as f:
+        with open(filename, "r", encoding="utf-8") as f:
             content = f.read()
         codeblocks = code_block_regex.findall(content)
         codeblocks = "\n".join(codeblocks)
