@@ -18,3 +18,4 @@ jobs:
         maturin develop
         pytest test
         ruff check .
+        ruff format --check .
