@@ -11,7 +11,7 @@ name = "mexpress"
 crate-type = ["cdylib"]
 
 [dependencies]
-exmex = { version = "0.20.4", features = ["partial"] }
-numpy = "0.24.0"
+exmex = { version = "0.20.5", features = ["partial"] }
+numpy = "0.26.0"
 num = "0.4.3"
-pyo3 = { version = "0.24.1", features = ["extension-module"] }
+pyo3 = { version = "0.26.0", features = ["extension-module"] }
