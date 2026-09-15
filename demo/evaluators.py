@@ -1,9 +1,11 @@
+from math import cos, sin, tan
 from time import time
-from py_expression_eval import Parser
-import mexpress as mx
+
 import numpy as np
-from math import sin, cos, tan
+from py_expression_eval import Parser
 from sympy import sympify
+
+import mexpress as mx
 
 
 def timed_parse(name, func, s, n_runs=1000):

@@ -4,7 +4,17 @@ dependencies = ["numpy"]
 description = "Math parser and evaluator capable of computing gradients and Hessians."
 readme = "README.md"
 version = "0.1.8"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
+[dependency-groups]
+dev = [
+    "py_expression_eval",
+    "sympy",
+    "pytest",
+    "maturin",
+    "scipy",
+    "ruff",
+    "tomli",
+]
 [build-system]
 requires = ["maturin>1.0,<2.0"]
 build-backend = "maturin"

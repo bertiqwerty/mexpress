@@ -1,4 +1,5 @@
 from time import time
+
 import numpy as np
 from scipy.optimize import minimize
 
@@ -42,8 +43,8 @@ def _run_method(f, method, jac, hess, n_runs=100, n_it_max=5000):
         f"#fails {suc}",
         f"#it {n_it}",
         f"{elapsed:.10f} sec",
-        f"jac {str(jac is not None):5}",
-        f"hess {str(hess is not None):5}",
+        f"jac {jac is not None!s:5}",
+        f"hess {hess is not None!s:5}",
     )
 
 

@@ -47,7 +47,7 @@ class Mexpress:
         for r in range(self.n_vars):
             for c in range(r, self.n_vars):
                 hess[r, c] = self._hess[r][c - r](x)
-            for c in range(0, r):
+            for c in range(r):
                 hess[r, c] = hess[c, r]
         return hess
 
