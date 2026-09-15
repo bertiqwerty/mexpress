@@ -1,5 +1,4 @@
-use exmex::{DiffDataType, Differentiate, Express, FlatEx};
-use num::Float;
+use exmex::{DiffDataType, Differentiate, Express, FlatEx, num::Float};
 use numpy::PyReadonlyArray1;
 use pyo3::exceptions::PyTypeError;
 use pyo3::prelude::*;
