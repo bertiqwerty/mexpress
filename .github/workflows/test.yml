@@ -16,7 +16,7 @@ jobs:
         . .venv/bin/activate
         pip3 install uv
         uv sync --group dev
-        maturin develop
-        pytest test
+        uv run maturin develop
+        uv run pytest test
         ruff check .
         ruff format --check .
