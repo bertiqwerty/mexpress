@@ -16,5 +16,5 @@ jobs:
         uv sync --group dev
         uv run maturin develop
         uv run pytest test
-        ruff check .
-        ruff format --check .
+        uv run ruff check .
+        uv run ruff format --check .
